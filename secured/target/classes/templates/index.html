@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Landing Page</title>
+    <style>
+        header{
+           text-align: center;
+           font-family: 'Courier New', Courier, monospace;
+           font-size: 16px;
+           background-color: #eeeeee;
+           padding-top: 20px;
+           padding-bottom: 50px;
+           position: fixed;
+           top: 2px;
+           left: 0;
+           width: 100%;
+           height: 100px;
+        }
+        .nav-bar{
+          list-style-type:none;
+          margin:0;
+          padding:0;
+        }
+        .nav-bar li{
+          display:inline-block;
+          margin-right:20px;
+        }
+        .nav-bar li a{
+          text-decoration:none;
+          display:inline;
+          padding:10px;
+          color:#2F5A78;
+          font-size:23px;
+        }
+        .nav-bar li a:hover{
+          text-decoration:underline;
+        }
+        .main{
+          margin-top:180px;
+        }
+        #copyright{
+              text-align: center;
+              font-size: 24px;
+        }
+        footer{
+            margin-top: 24px;
+            background-color: #eeeeee;
+            font-size: 23px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WELCOME TO LANDING PAGE</h1>
+        <nav>
+            <ul class="nav-bar">
+                <li><a th:href="@{/index}" target="_self">Home</a></li>
+                <li><a th:href="@{/about}" target="_self">About</a></li>
+                <li><a th:href="@{/cv}" target="_self">CV</a></li>
+                <li><a th:href="@{/community}" target="_self">Community</a></li>
+                <li sec:authorize="isAuthenticated"><a th:href="@{/logout}" target="_self">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main">
+        <P>Welcome to my website I'm MUDDY RAMADHAN FAKIH a System Developer using Spring Boot Framework as full backend developer</P>
+    </div>
+    <footer>
+        <p id="copyright">&copy; Muddy Ramadhan</p>
+    </footer>
+</body>
+</html>

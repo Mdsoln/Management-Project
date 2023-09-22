@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+          text-align: center;
+        }
+        .form{
+           margin-top: 10px;
+        }
+        header{
+            text-align: center;
+            background-color: #eeeeee;
+            padding-top: 25px;
+            padding-bottom: 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            color:black;
+            padding: 40px;
+            background-color:#eeeeee;
+          }
+        .all{
+            width: 90%;
+            height: 650px;
+            font-size: 23px;
+            background-color: #eeeeee;
+            margin-top: 160px;
+        }
+        #save{
+            width: 50%;
+            margin-top: 20px;
+            padding: 10px;
+            margin-left: 60px;
+            background-color:#3c88ec;
+            color:white;
+            justify-content: center;
+            font-size: 20px;
+            border-radius: 10px;
+            border: none;
+        }
+        label{
+            color: #2F5A78;
+            margin-top: 28px;
+            font-weight: bold;
+        }
+        input{
+            margin-left: 30px;
+            padding: 12px;
+            border: 1px solid #2F5A78;
+            border-radius: 5px;
+            width: 30%;
+        }
+        input[type="text"]:focus{
+            border: 1px solid #2F5A78;;
+        }
+        footer{
+            background-color: #eeeeee;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        #copyright{
+            text-align: center;
+            font-size: 23px;
+        }
+        .error-message {
+             color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <marquee direction="left">
+            <span class="marquee-content">Spring Boot Application</span>
+        </marquee>
+    </header>
+        <div class="all">
+            <div th:if="${param.success}">
+                <div class="Success-message">
+                    You have successfully registered
+                </div>
+            </div>
+            <form method="post" th:action="@{/register/save}" th:object="${user}" role="form">
+                <p><strong>Create your account</strong></p>
+                <div class="form">
+                    <label for="fname" style="margin-left:-280px;">First name:</label><br>
+                    <input type="text" id="fname" name="fname" th:field="*{firstName}" placeholder="Enter first name">
+                    <p th:errors = "*{firstName}" class="error-message" th:if="${#fields.hasErrors('firstName')}"></p>
+                </div>
+                <div class="form">
+                    <label for="lastName" style="margin-left:-280px;">Last name:</label><br>
+                    <input type="text" id="lastName" name="lastName" placeholder="Enter last name" th:field="*{lastName}">
+                    <p th:errors = "*{lastName}" class="error-message" th:if="${#fields.hasErrors('lastName')}"></p>
+                </div>
+                <div class="form">
+                    <label for="email" style="margin-left:-320px;">Email:</label><br>
+                    <input id="email" name="email" placeholder="Enter email address" th:field="*{email}" type="email"/>
+                    <p th:errors = "*{email}" class="error-message" th:if="${#fields.hasErrors('email')}"></p>
+                </div>
+                <div class="form">
+                    <label for="username" style="margin-left:-280px;">Username:</label><br>
+                    <input type="text" id="username" name="username" placeholder="Enter username" th:field="*{username}">
+                    <p th:errors = "*{username}" class="error-message" th:if="${#fields.hasErrors('username')}"></p>
+                </div>
+                <div class="form">
+                    <label for="password" style="margin-left:-280px;">Password:</label><br>
+                    <input type="password" id="password" name="password" placeholder="Enter password" th:field="*{password}">
+                    <p th:errors = "*{password}" class="error-message" th:if="${#fields.hasErrors('password')}"></p>
+                </div>
+                <button type="submit" name="save" id="save">Register</button>
+            </form>
+            <p>Have an account?<a th:href="@{/login}">Login here</a></p>
+        </div>
+    <footer>
+        <p id="copyright">Copyright &copy;Muddy Ramadhan</p>
+    </footer>
+</body>
+</html>

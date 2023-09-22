@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        header{
+             text-align: center;
+             font-family: 'Courier New', Courier, monospace;
+             font-size: 16px;
+             background-color: #eeeeee;
+             padding-top: 20px;
+             padding-bottom: 50px;
+            <!-- position: fixed;-->
+             top: 2px;
+             left: 0;
+             width: 100%;
+             height: 100px;
+          }
+        <!--main {
+             margin-top:20px;
+          }-->
+        #copyright{
+              text-align: center;
+              font-size: 24px;
+            }
+        footer{
+            margin-top: 24px;
+            background-color: #eeeeee;
+            font-size: 23px;
+            padding: 10px;
+        }
+        .error-message {
+             color: red;
+        }
+        .logout-message {
+             color: green;
+        }
+
+         label{
+            font-weight: bold;
+            font-size: Arial;
+            color: #2F5A78;
+            margin-right: 260px;
+        }
+        input{
+            padding: 7px;
+            width: 70%;
+            border: none;
+            outline: none;
+            background-color: transparent;
+        }
+        input[type="text"]:focus{
+            background-color: aliceblue;
+        }
+        .form-group{
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .underline{
+            position: relative;
+            height: 1px;
+            background-color: #2F5A78;
+        }
+        .underline::before{
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            width: 100%;
+            left: 0;
+            height: 2px;
+            background-color: #2F5A78;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        input:focus+.underline::before{
+            transform: scaleX(1);
+        }
+        input[type="checkbox"]{
+            width: 33px;
+            margin-right: 10px;
+            text-align: left;
+        }
+        .content{
+             margin-top: 20px;
+            width: 90%;
+            height: 570px;
+            font-size: 23px;
+            justify-content: center;
+            text-align: center;
+            background-color: #eeeeee;
+        }
+        button{
+            background-color:#2F5A78;
+            color: white;
+            padding: 5px;
+            border-radius: 10px;
+            width: 70%;
+            border: none;
+            margin-top: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+        p{
+            margin-right: 100px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+   <header>
+       <span><marquee behavior="" direction="left">Hello World</marquee></span>
+   </header>
+   <main>
+       <div class="content">
+           <form method="post" th:action="@{/login}" role="form">
+               <div class="form-group">
+                   <p>Have an account? Login here</p>
+                   <label for="username">User name:</label><br><br>
+                   <input type="text" name="username" id="username">
+                   <div class="underline"></div>
+               </div>
+               <div class="form-group">
+                   <label for="password">Password:</label><br><br>
+                   <input type="password" name="password" id="password">
+                   <div class="underline"></div>
+               </div>
+               <div th:if="${param.error}">
+                   <div class="error-message">Invalid Email or Password</div>
+               </div>
+               <div th:if="${param.logout}">
+                   <div class="logout-message"> You have been logged out.</div>
+               </div>
+               <button type="submit" name="login" id="login">LOGIN</button><br><br>
+               <label for="claim"></label><input type="checkbox" name="claim" id="claim">REMEMBER ME
+               <p style="margin-right:30px;">Don't have an account?<a th:href="@{/register}" >Create here</a></p>
+           </form>
+       </div>
+   </main>
+   <footer>
+       <p id="copyright">Copyright &copy;Muddy Ramadhan</p>
+   </footer>
+</body>
+</html>
