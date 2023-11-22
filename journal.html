@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journals Downloader</title>
+  <style>
+    .form-input{
+       width: 50%;
+       height: 500px;
+       background-color: antiquewhite;
+       color: #2F5A78;
+    }
+    .button {
+      display: inline-block;
+      border-radius: 8px;
+      background-color: #2F5A78;
+      border: none;
+      color: white;
+      text-align: center;
+      font-size: 23px;
+      padding: 10px;
+      width: 190px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    
+    .button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+    
+    .button span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+    
+    .button:hover span {
+      padding-right: 25px;
+    }
+    
+    .button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+    input[type=text] {
+      width: 130px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      background-color: white;
+      background-image: url('searchicon.png');
+      background-position: 10px 10px; 
+      background-repeat: no-repeat;
+      padding: 12px 20px 12px 40px;
+      transition: width 0.4s ease-in-out;
+      margin-top: 3%;
+    }
+    input[type=text]:focus {
+      width: 45%;
+    }
+    .header {
+      margin-bottom: 1%;
+      background-color: #eeeeee;
+      padding-top: 60px;
+      padding-bottom: 60px;
+      font-size: 25px;
+      text-align: center;
+    }
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+  }
+  
+  th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+  }
+  
+  tr:hover{background-color:#f5f5f5}
+  </style>
+</head>
+<body>
+  <header class="header">
+        <h1>JOURNALS DOWNLOADER</h1>
+  </header>
+    <div class="form-input">
+      <div class="aside-div">
+        Welcome to our downloader! Here you can search and download any article or Journal you wish to have
+      </div>
+        <form id="form">
+           <label for="book-name"></label>
+           <input type="text" id="book-name" placeholder="Name of Journal">
+           <button type="submit" class="button">search</button>
+        </form>
+    
+        <div id="searched-book" style="display: none;">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody id="file-details">
+              <!-- Table rows will be dynamically added here -->
+            </tbody>
+          </table>
+        </div>
+        <div id="exception-message" style="display: none; color: red;">
+          <!-- Exception message placeholder -->
+        </div>
+    <script>
+      document.querySelector('form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const bookName = document.getElementById('book-name').value;
+        
+        try {
+          const backendURL = 'http://localhost:8080';
+          const detailsResponse = await fetch(`${backendURL}/api/articles/articleDetails/${bookName}`);
+          
+          if (detailsResponse.ok) {
+            const fileDetails = await detailsResponse.json();
+            const tableBody = document.getElementById('file-details');
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${fileDetails.articleName}</td>
+              <td>${fileDetails.articleType}</td>
+              <td>${fileDetails.articleSize}</td>
+              <td><a href="${backendURL}/api/articles/download/${bookName}" download="${fileDetails.articleName}">Download</a></td>
+            `;
+            tableBody.appendChild(row);
+            
+            document.getElementById('searched-book').style.display = 'block';
+            document.getElementById('exception-message').style.display = 'none';
+          } else {
+            throw new Error('File not found or an error occurred.');
+          }
+        } catch (error) {
+          document.getElementById('exception-message').style.display = 'block';
+          document.getElementById('exception-message').innerText = error.message;
+          document.getElementById('searched-book').style.display = 'none';
+        }
+      });
+      
+    </script>
+</body>
+</html>
